@@ -2,13 +2,14 @@ from urllib import parse,request
 import sys
 import json
 import base64
+import os
 #TODO: 计算每分钟数据总步数
 def get_minites_data(minutes_bytes_data):
     sleep_mode = 0
     sleep_active = 0
     step = 0
     minutes = 0
-    line = "\n每分钟数据:\n| min| | time| |mod| |act| |stp|\n"
+    line = "\nmin data:\n| min| | time| |mod| |act| |stp|\n"
     total_step_in_bytes = 0
     for index in range (len(minutes_bytes_data)):
         if index % 3 == 0:
@@ -30,7 +31,17 @@ def get_minites_data(minutes_bytes_data):
     line = line + "total steps:%d\n" % (total_step_in_bytes)
     return line
 def write_result_to_file(result):
-    filepath = "/Users/houjie/Workspace/logs/healthData/" + user_id + "_" + date + "_res.txt"
+    home = os.path.expanduser('~')
+    filepath = home + "/logs/healthData/" + user_id + "_" + date + "_res.txt"
+    if os.path.isdir(home+'/logs'):
+        pass
+    else:
+        os.mkdir(home+'/logs')
+    file_dir = home + "/logs/healthData"
+    if os.path.isdir(file_dir):
+        pass
+    else:
+        os.mkdir(file_dir)
     print("out put file path:" + filepath)
     result = json.loads(result)
     code = result['code']
@@ -38,7 +49,7 @@ def write_result_to_file(result):
 
     data = result['data']
     if len(data) == 0:
-        print("服务器上没有数据!!!")
+        print("no data on server!")
     else:
         dicdata = data[0]
         data_user_id = dicdata['userId']
@@ -66,24 +77,25 @@ def write_result_to_file(result):
         # print("key data:" + str(data))
         # print("key code:" + str(code))
         # print("key message:" + str(message))
+
         with open(filepath, 'w') as resFile:
-            resFile.write("用户ID:" + str(user_id) + "\n")
-            resFile.write("目标步数:" + str(data_summary_goal) + "步\n")
-            resFile.write("活动量:" + str(data_summary_active) + "分钟\n")
-            resFile.write("坐:" + str(data_summary_sit) + "分钟\n")
+            resFile.write("UserID:" + str(user_id) + "\n")
+            resFile.write("TargetStep:" + str(data_summary_goal) + "Step\n")
+            resFile.write("Active:" + str(data_summary_active) + "min\n")
+            resFile.write("Sit:" + str(data_summary_sit) + "min\n")
     #        resFile.write("爬楼数:" + str(data_summary_floor_count) + "\n")
-            resFile.write("静息心率:" + str(data_summary_rhr) + "\n")
-            resFile.write("睡眠数据:" + str(data_summary_sleep) + "\n")
-            resFile.write("步数详情:" + str(data_summary_stp) + "\n")
+            resFile.write("RestHeartRate:" + str(data_summary_rhr) + "\n")
+            resFile.write("SleepData:" + str(data_summary_sleep) + "\n")
+            resFile.write("StepDetail:" + str(data_summary_stp) + "\n")
             # resFile.write("心率数据:" + heart_rate_raw)
 
             # resFile.write("心率数据decoded:" + str(herat_rate_raw_bytes))
-            resFile.write("心率数据长度:" + str(len(herat_rate_raw_bytes)) + "\n")
+            resFile.write("HeartDataLen:" + str(len(herat_rate_raw_bytes)) + "\n")
             resFile.write("uuid:" + data_summary_uuid + "\n")
-            resFile.write("上传日期:" + data_summary_date + "\n")
+            resFile.write("UploadDate:" + data_summary_date + "\n")
 
             # resFile.write("每分钟数据:" + str(data_summary_minutes_data))
-            resFile.write("每分钟数据长度:" + str(len(data_summary_minutes_data)) + "\n")
+            resFile.write("MinDataLen:" + str(len(data_summary_minutes_data)) + "\n")
             # resFile.write(" 第一分钟 数据: " + str(int(data_summary_minutes_data[0])) + " " + str(
             #     int(data_summary_minutes_data[1])) + " " + str(int(data_summary_minutes_data[2])))
             # resFile.write("summary:" + str(data_summary))

@@ -61,7 +61,7 @@ def format_simulation_data_from_logs(filepaths):
                     #从fb:cf2,33,180,85,2,50,0,187,0,0,16,1中提取出配置值
                     newline = line.replace('\n','')
                     words = newline.split(',')
-                    codes = "\n **** 替换 /home/jayhou/LShell/FirstBeatSim/delivery-20170814/ete/examples/analyzerExample/mini.c 中如下部分：****\n\n" \
+                    codes = "\n****replace/home/jayhou/LShell/FirstBeatSim/delivery-20170814/ete/examples/analyzerExample/mini.c-parts-below-****\n\n" \
                     + "    // *******************************************************************************\n" \
                     + "    // PHASE 2: Setting ETE background parameters.\n" \
                     + "    // *******************************************************************************\n" \
@@ -84,7 +84,7 @@ def format_simulation_data_from_logs(filepaths):
                     #从fb:cf3,0,0,0,0,0中提取出配置值
                     newline = line.replace('\n','')
                     words = newline.split(',')
-                    codes = "\n **** 替换 /home/jayhou/LShell/FirstBeatSim/delivery-20170814/ete/examples/analyzerExample/mini.c 中如下部分：****\n\n" \
+                    codes = "\n **** replace /home/jayhou/LShell/FirstBeatSim/delivery-20170814/ete/examples/analyzerExample/mini.c part below-****\n\n" \
                     + "    // *******************************************************************************\n" \
                     + "    // PHASE 3: Setting exercise plan for real time guidance (Optional).\n" \
                     + "    // *******************************************************************************\n" \

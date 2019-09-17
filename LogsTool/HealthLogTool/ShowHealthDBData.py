@@ -47,7 +47,7 @@ with open(sys.argv[1]+".db.res",'w') as resFile:
         dbfile = sys.argv[1]
         formatedDate = sys.argv[2]
         timestamp = time.mktime(time.strptime(formatedDate,"%Y-%m-%d"))
-        date = (int)(timestamp/60/60/24);
+        date = (int)(timestamp/60/60/24) + 1;
         resFile.write("数据库文件：" + dbfile + " 查询日期:" + formatedDate + " 数据库date:" + str(date) + "\n")
 
         # test.db is a file in the working directory
